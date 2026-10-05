@@ -1,0 +1,59 @@
+# Compila InstaDM en un Mac de GitHub y deja un .ipa SIN FIRMAR como artifact.
+# Después lo firmás e instalás con Sideloadly o AltStore (ver README).
+name: Build IPA
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:          # botón "Run workflow" en la pestaña Actions
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Versión de Xcode
+        run: xcodebuild -version
+
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+
+      - name: Generar InstaDM.xcodeproj
+        run: xcodegen generate
+
+      - name: Compilar para iPhone (sin firma)
+        run: |
+          xcodebuild \
+            -project InstaDM.xcodeproj \
+            -scheme InstaDM \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            -quiet \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Empaquetar .ipa (Payload/ zippeado)
+        run: |
+          APP=$(find build/Build/Products/Release-iphoneos -maxdepth 1 -name "*.app" | head -n 1)
+          if [ -z "$APP" ]; then echo "No se encontró el .app"; exit 1; fi
+          echo "App: $APP"
+          rm -rf Payload && mkdir Payload
+          cp -R "$APP" Payload/
+          zip -qry InstaDM-unsigned.ipa Payload
+          ls -lh InstaDM-unsigned.ipa
+
+      - name: Subir artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: InstaDM-ipa
+          path: InstaDM-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30
