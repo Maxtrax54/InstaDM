@@ -1,0 +1,12 @@
+# Generado por XcodeGen (se regenera con `xcodegen generate`)
+*.xcodeproj/
+
+# Compilación
+build/
+DerivedData/
+Payload/
+*.ipa
+
+# macOS / Xcode
+.DS_Store
+xcuserdata/

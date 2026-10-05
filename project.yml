@@ -1,0 +1,50 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  project.yml — definición del proyecto para XcodeGen
+#  Generar el .xcodeproj:   xcodegen generate
+#  (el .xcodeproj es descartable: si cambiás algo, editá ESTE archivo y regenerá)
+# ─────────────────────────────────────────────────────────────────────────────
+name: InstaDM
+
+options:
+  deploymentTarget:
+    iOS: "16.0"
+  developmentLanguage: es
+  createIntermediateGroups: true
+
+targets:
+  InstaDM:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: InstaDM/Sources
+      - path: InstaDM/Resources          # inject.js + íconos → se copian al bundle
+        buildPhase: resources
+      - path: InstaDM/Info.plist         # visible en Xcode, pero no se copia como recurso
+        buildPhase: none
+    settings:
+      base:
+        # ⚙️ Editables ───────────────────────────────────────────────────────
+        APP_DISPLAY_NAME: InstaDM                        # nombre debajo del ícono
+        PRODUCT_BUNDLE_IDENTIFIER: com.maximo.instadm    # Bundle ID
+        DEVELOPMENT_TEAM: ""                             # tu Team ID (ver README) o elegilo en Xcode
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        # ────────────────────────────────────────────────────────────────────
+        INFOPLIST_FILE: InstaDM/Info.plist
+        GENERATE_INFOPLIST_FILE: "NO"
+        TARGETED_DEVICE_FAMILY: "1"                      # 1 = solo iPhone
+        SUPPORTS_MACCATALYST: "NO"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "5.0"                             # modo de lenguaje Swift 5 (compila con Swift 5.9+)
+        CODE_SIGN_STYLE: Automatic
+
+schemes:
+  InstaDM:
+    build:
+      targets:
+        InstaDM: all
+    run:
+      config: Debug
+    archive:
+      config: Release

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Identidad (los valores $(...) vienen de project.yml) -->
+	<key>CFBundleDevelopmentRegion</key>
+	<string>es</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(APP_DISPLAY_NAME)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+
+	<!-- App SwiftUI de una sola ventana -->
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
+	<key>UILaunchScreen</key>
+	<dict/>
+
+	<!-- Solo iPhone, solo vertical -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+
+	<!-- Permisos para mandar fotos, videos y audios por DM -->
+	<key>NSCameraUsageDescription</key>
+	<string>InstaDM usa la cámara para que puedas sacar fotos o grabar videos y mandarlos por mensaje directo.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>InstaDM usa el micrófono para que puedas grabar y mandar audios por mensaje directo.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>InstaDM accede a tus fotos para que puedas elegir imágenes y videos y mandarlos por mensaje directo.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>InstaDM guarda en tu fototeca las fotos y videos que decidas descargar.</string>
+</dict>
+</plist>
